@@ -32,7 +32,7 @@ export default function About() {
                 "absolute -bottom-10 w-64 aspect-square bg-accent p-6 rounded-xl rotate-12 hidden md:block shadow-2xl border border-primary/20",
                 dir === "rtl" ? "-left-10" : "-right-10"
               )}>
-                <img src="https://images.unsplash.com/photo-1588693959661-0ebdc1d4a0fc?w=400&q=80" alt="Process" className="w-full h-full object-cover rounded-lg mix-blend-overlay" />
+                <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Process" className="w-full h-full object-cover rounded-lg mix-blend-overlay" />
               </div>
             </motion.div>
 

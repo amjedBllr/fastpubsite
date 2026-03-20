@@ -1,7 +1,8 @@
+import { useRef, useState, type ChangeEvent, type DragEvent } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, CheckCircle2, Upload } from "lucide-react";
+import { Loader2, CheckCircle2, Upload, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useCreateOrder, insertOrderSchema, type OrderInput } from "@/hooks/use-orders";
 import { Layout } from "@/components/layout";
@@ -13,6 +14,9 @@ export default function Order() {
   const createOrder = useCreateOrder();
   const { t } = useI18n();
   const o = t.order;
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [artworkFiles, setArtworkFiles] = useState<File[]>([]);
+  const [isDraggingFiles, setIsDraggingFiles] = useState(false);
 
   const form = useForm<OrderInput>({
     resolver: zodResolver(insertOrderSchema),
@@ -36,11 +40,61 @@ export default function Order() {
       onSuccess: () => {
         toast({ title: o.successTitle, description: o.note });
         form.reset();
+        setArtworkFiles([]);
       },
       onError: (error) => {
         toast({ title: "Error", description: error.message, variant: "destructive" });
       }
     });
+  };
+
+  const addArtworkFiles = (incomingFiles: FileList | null) => {
+    if (!incomingFiles?.length) return;
+
+    const nextFiles = Array.from(incomingFiles).filter((file) => file.type.startsWith("image/"));
+
+    if (!nextFiles.length) {
+      toast({
+        title: "Images only",
+        description: "Please upload image files for the artwork area.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setArtworkFiles((current) => {
+      const merged = [...current];
+
+      nextFiles.forEach((file) => {
+        const exists = merged.some(
+          (existing) =>
+            existing.name === file.name &&
+            existing.size === file.size &&
+            existing.lastModified === file.lastModified
+        );
+
+        if (!exists) {
+          merged.push(file);
+        }
+      });
+
+      return merged;
+    });
+  };
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    addArtworkFiles(event.target.files);
+    event.target.value = "";
+  };
+
+  const handleFileDrop = (event: DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    setIsDraggingFiles(false);
+    addArtworkFiles(event.dataTransfer.files);
+  };
+
+  const removeArtworkFile = (fileToRemove: File) => {
+    setArtworkFiles((current) => current.filter((file) => file !== fileToRemove));
   };
 
   if (createOrder.isSuccess) {
@@ -171,11 +225,59 @@ export default function Order() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="md:col-span-2">
                   <label className="block font-sans text-sm font-bold uppercase tracking-wider mb-2">{o.artwork}</label>
-                  <div className="border-2 border-dashed border-border hover:border-primary rounded-xl p-10 text-center transition-colors cursor-pointer bg-background">
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    className="hidden"
+                    onChange={handleFileChange}
+                  />
+                  <div
+                    onClick={() => fileInputRef.current?.click()}
+                    onDragOver={(event) => {
+                      event.preventDefault();
+                      setIsDraggingFiles(true);
+                    }}
+                    onDragLeave={() => setIsDraggingFiles(false)}
+                    onDrop={handleFileDrop}
+                    className={clsx(
+                      "border-2 border-dashed rounded-xl p-10 text-center transition-colors cursor-pointer bg-background",
+                      isDraggingFiles ? "border-primary bg-primary/5" : "border-border hover:border-primary"
+                    )}
+                  >
                     <Upload size={32} className="mx-auto mb-4 text-muted-foreground" />
                     <p className="font-sans font-bold mb-1">{o.artworkCta}</p>
                     <p className="font-sans text-sm text-muted-foreground">{o.artworkNote}</p>
                   </div>
+                  {artworkFiles.length > 0 && (
+                    <div className="mt-4 space-y-2">
+                      {artworkFiles.map((file) => (
+                        <div
+                          key={`${file.name}-${file.lastModified}-${file.size}`}
+                          className="flex items-center justify-between gap-4 rounded-lg border border-border bg-background px-4 py-3"
+                        >
+                          <div className="min-w-0">
+                            <p className="truncate font-sans text-sm text-foreground">{file.name}</p>
+                            <p className="font-sans text-xs text-muted-foreground">
+                              {(file.size / 1024 / 1024).toFixed(2)} MB
+                            </p>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              removeArtworkFile(file);
+                            }}
+                            className="shrink-0 rounded-full p-1 text-muted-foreground transition-colors hover:text-primary"
+                            aria-label={`Remove ${file.name}`}
+                          >
+                            <X size={16} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <div>

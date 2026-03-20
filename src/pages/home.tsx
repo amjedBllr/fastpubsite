@@ -24,41 +24,45 @@ const SERVICE_IMGS = [
   "photo-1626785774573-4b799315345d",
 ];
 
+const PROJECT_IMAGES = [
+  "https://plus.unsplash.com/premium_photo-1773309436260-d5140da5bb83?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDR8fHxlbnwwfHx8fHw%3D",
+  "https://plus.unsplash.com/premium_photo-1773781519718-f90318d39044?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://plus.unsplash.com/premium_photo-1773781519810-63a858473fbc?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1772440428276-79f044085e53?q=80&w=686&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1772891753024-5d78af4ff483?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://plus.unsplash.com/premium_photo-1754772566253-9209f107e7b4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fHw%3D",
+  "https://plus.unsplash.com/premium_photo-1773309596018-0b61f9ee0c35?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://plus.unsplash.com/premium_photo-1773309079167-d479563cb025?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+];
+
 function FloatingDraggable({
   className,
   src,
   alt,
   dragConstraints,
-  floatAnimate,
-  floatTransition,
-  initial,
+  draggable = true,
   innerClassName,
 }: {
   className: string;
   src: string;
   alt: string;
   dragConstraints: React.RefObject<HTMLElement | null>;
-  floatAnimate: Record<string, unknown>;
-  floatTransition: Record<string, unknown>;
-  initial: Record<string, unknown>;
+  draggable?: boolean;
   innerClassName?: string;
 }) {
   return (
     <motion.div
-      className={cn(className, "cursor-grab active:cursor-grabbing")}
-      drag
+      className={cn(className, draggable && "cursor-grab active:cursor-grabbing")}
+      drag={draggable}
       dragConstraints={dragConstraints}
       dragElastic={0.08}
       dragMomentum={false}
-      whileDrag={{ scale: 1.02 }}
+      whileDrag={draggable ? { scale: 1.02 } : undefined}
     >
-      <motion.img
+      <img
         src={src}
         alt={alt}
         className={innerClassName ?? "w-full h-full object-contain drop-shadow-2xl"}
-        initial={initial}
-        animate={floatAnimate}
-        transition={floatTransition}
       />
     </motion.div>
   );
@@ -68,9 +72,16 @@ export default function Home() {
   const { t, dir } = useI18n();
   const isMobile = useIsMobile();
   const [overlayIdx, setOverlayIdx] = useState<number | null>(null);
+  const [projectOverlayIdx, setProjectOverlayIdx] = useState<number | null>(null);
   const heroRef = useRef<HTMLElement>(null);
 
   const activeService = overlayIdx !== null ? t.services.items[overlayIdx] : null;
+  const activeProject = projectOverlayIdx !== null
+    ? {
+        id: projectOverlayIdx + 1,
+        desc: t.portfolioPage.projectDescs[projectOverlayIdx],
+      }
+    : null;
 
   return (
     <Layout>
@@ -91,67 +102,43 @@ export default function Home() {
             src={`${import.meta.env.BASE_URL}images/logo-shape.png`}
             alt=""
             className={cn(
-              "absolute top-18 w-28 sm:w-36 opacity-80 pointer-events-auto",
+              "absolute top-18 w-28 sm:w-36 opacity-80",
               dir === "rtl" ? "left-3" : "right-3"
             )}
             dragConstraints={heroRef}
-            initial={{ opacity: 0, scale: 0.85 }}
-            floatAnimate={
-              isMobile
-                ? { opacity: 0.8, scale: 1, y: [0, -6, 0], rotate: [0, 2, 0] }
-                : { opacity: 0.9, scale: 1, y: [0, -12, 0], rotate: [0, 4, 0] }
-            }
-            floatTransition={{
-              opacity: { duration: 0.8, delay: 0.25 },
-              scale: { duration: 0.8, delay: 0.25 },
-              y: { repeat: Infinity, duration: isMobile ? 8 : 6, ease: "easeInOut", delay: 0.4 },
-              rotate: { repeat: Infinity, duration: isMobile ? 8 : 6, ease: "easeInOut", delay: 0.4 }
-            }}
-            innerClassName="w-full h-full object-contain drop-shadow-2xl"
+            draggable={false}
+            innerClassName={cn(
+              "w-full h-full object-contain drop-shadow-2xl will-change-transform",
+              isMobile ? "float-gentle" : "float-rise"
+            )}
           />
           <FloatingDraggable
             src={`${import.meta.env.BASE_URL}images/floating-sticker-1.png`}
             alt=""
             className={cn(
-              "absolute bottom-8 w-36 sm:w-44 opacity-75 pointer-events-auto",
+              "absolute bottom-8 w-36 sm:w-44 opacity-75",
               dir === "rtl" ? "left-[-1rem]" : "right-[-1rem]"
             )}
             dragConstraints={heroRef}
-            initial={{ opacity: 0, scale: 0.85 }}
-            floatAnimate={
-              isMobile
-                ? { opacity: 0.75, scale: 1, y: [0, 8, 0], rotate: [-5, -2, -5] }
-                : { opacity: 0.85, scale: 1, y: [0, 14, 0], rotate: [-8, -4, -8] }
-            }
-            floatTransition={{
-              opacity: { duration: 0.8, delay: 0.4 },
-              scale: { duration: 0.8, delay: 0.4 },
-              y: { repeat: Infinity, duration: isMobile ? 9 : 7, ease: "easeInOut", delay: 1 },
-              rotate: { repeat: Infinity, duration: isMobile ? 9 : 7, ease: "easeInOut", delay: 1 }
-            }}
-            innerClassName="w-full h-full object-contain drop-shadow-2xl"
+            draggable={false}
+            innerClassName={cn(
+              "w-full h-full object-contain drop-shadow-2xl will-change-transform",
+              isMobile ? "float-drift" : "float-sway"
+            )}
           />
           <FloatingDraggable
             src={`${import.meta.env.BASE_URL}images/floating-sticker-2.png`}
             alt=""
             className={cn(
-              "absolute top-[42%] w-24 sm:w-32 opacity-70 pointer-events-auto",
+              "absolute top-[42%] w-24 sm:w-32 opacity-70",
               dir === "rtl" ? "left-[18%]" : "right-[18%]"
             )}
             dragConstraints={heroRef}
-            initial={{ opacity: 0, scale: 0.88 }}
-            floatAnimate={
-              isMobile
-                ? { opacity: 0.7, scale: 1, y: [0, -5, 0], rotate: [4, 1, 4] }
-                : { opacity: 0.78, scale: 1, y: [0, -9, 0], rotate: [6, 2, 6] }
-            }
-            floatTransition={{
-              opacity: { duration: 0.8, delay: 0.55 },
-              scale: { duration: 0.8, delay: 0.55 },
-              y: { repeat: Infinity, duration: isMobile ? 8.5 : 7, ease: "easeInOut", delay: 0.8 },
-              rotate: { repeat: Infinity, duration: isMobile ? 8.5 : 7, ease: "easeInOut", delay: 0.8 }
-            }}
-            innerClassName="w-full h-full object-contain drop-shadow-2xl"
+            draggable={false}
+            innerClassName={cn(
+              "w-full h-full object-contain drop-shadow-2xl will-change-transform",
+              isMobile ? "float-tilt-soft" : "float-tilt"
+            )}
           />
         </div>
 
@@ -213,10 +200,7 @@ export default function Home() {
                 alt="Decorative 3D Shape"
                 className="absolute top-[10%] right-0 w-64 h-64 z-20"
                 dragConstraints={heroRef}
-                initial={{ opacity: 1, scale: 1 }}
-                floatAnimate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
-                floatTransition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-                innerClassName="w-full h-full object-contain drop-shadow-2xl"
+                innerClassName="w-full h-full object-contain drop-shadow-2xl will-change-transform float-rise"
               />
 
               {/* Floating sticker 2 */}
@@ -225,10 +209,7 @@ export default function Home() {
                 alt="Floating Sticker"
                 className="absolute bottom-[20%] left-[10%] w-72 h-72 z-30"
                 dragConstraints={heroRef}
-                initial={{ opacity: 1, scale: 1 }}
-                floatAnimate={{ y: [0, 20, 0], rotate: [-10, -5, -10] }}
-                floatTransition={{ repeat: Infinity, duration: 7, ease: "easeInOut", delay: 1 }}
-                innerClassName="w-full h-full object-contain drop-shadow-2xl"
+                innerClassName="w-full h-full object-contain drop-shadow-2xl will-change-transform float-sway"
               />
 
               <FloatingDraggable
@@ -236,10 +217,7 @@ export default function Home() {
                 alt="Floating Typography Sticker"
                 className="absolute top-[36%] right-[8%] w-52 h-52 z-20"
                 dragConstraints={heroRef}
-                initial={{ opacity: 1, scale: 1 }}
-                floatAnimate={{ y: [0, -14, 0], rotate: [5, 2, 5] }}
-                floatTransition={{ repeat: Infinity, duration: 6.5, ease: "easeInOut", delay: 0.6 }}
-                innerClassName="w-full h-full object-contain drop-shadow-2xl"
+                innerClassName="w-full h-full object-contain drop-shadow-2xl will-change-transform float-tilt"
               />
 
               {/* Background glow */}
@@ -275,7 +253,7 @@ export default function Home() {
         <motion.div
           className="flex font-display text-3xl md:text-4xl text-background gap-8 px-4"
           animate={{ x: dir === "rtl" ? ["0%", "50%"] : ["0%", "-50%"] }}
-          transition={{ ease: "linear", duration: 20, repeat: Infinity }}
+          transition={{ ease: "linear", duration: isMobile ? 28 : 20, repeat: Infinity }}
         >
           {[...Array(10)].map((_, i) => (
             <span key={i} className="flex items-center gap-8">
@@ -366,9 +344,10 @@ export default function Home() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className={cn("relative rounded-xl overflow-hidden group bg-card", item.span)}
+                onClick={() => setProjectOverlayIdx(i)}
+                className={cn("relative rounded-xl overflow-hidden group bg-card cursor-pointer", item.span)}
               >
-                <img src={`https://picsum.photos/seed/${item.id}00/800/800`} alt={`${t.portfolio.projectLabel} ${item.id}`} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
+                <img src={PROJECT_IMAGES[i % PROJECT_IMAGES.length]} alt={`${t.portfolio.projectLabel} ${item.id}`} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                   <p className="font-display text-2xl text-white translate-y-4 group-hover:translate-y-0 transition-transform">{t.portfolio.projectLabel} {item.id}</p>
                   <p className="font-sans text-sm text-primary uppercase tracking-widest translate-y-4 group-hover:translate-y-0 transition-transform delay-75">{t.portfolio.categoryLabel}</p>
@@ -378,6 +357,17 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {activeProject && (
+        <Overlay
+          open={projectOverlayIdx !== null}
+          onClose={() => setProjectOverlayIdx(null)}
+          title={`${t.portfolio.projectLabel} ${activeProject.id} - ${t.portfolio.categoryLabel}`}
+          desc={activeProject.desc}
+          useCase={t.portfolio.categoryLabel}
+          cta={t.overlay.orderNow}
+        />
+      )}
 
       {/* WHY CHOOSE US */}
       <section className="py-32 px-6 overflow-hidden">

@@ -36,8 +36,8 @@ export default function Contact() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <a href="tel:+1234567890" className="block font-sans text-xl md:text-2xl hover:text-primary transition-colors">+1 (234) 567-890</a>
-                  <a href="tel:+1234567891" className="block font-sans text-xl md:text-2xl hover:text-primary transition-colors">+1 (234) 567-891</a>
+                  <a href="tel:+213550808081" dir="ltr" className="block font-sans text-xl md:text-2xl hover:text-primary transition-colors">(+213) 550 808 081</a>
+                  <a href="tel:+213550808082" dir="ltr" className="block font-sans text-xl md:text-2xl hover:text-primary transition-colors">(+213) 550 808 082</a>
                 </div>
               </div>
 
@@ -55,13 +55,13 @@ export default function Contact() {
               </div>
 
               <div className="grid grid-cols-2 gap-8">
-                <a href="#" className="bg-[#25D366]/10 border border-[#25D366]/30 p-8 rounded-2xl flex flex-col items-center justify-center gap-4 hover:bg-[#25D366]/20 transition-colors group">
+                <a href="https://wa.me/213550808081" target="_blank" rel="noreferrer" className="bg-[#25D366]/10 border border-[#25D366]/30 p-8 rounded-2xl flex flex-col items-center justify-center gap-4 hover:bg-[#25D366]/20 transition-colors group">
                   <MessageSquare size={40} className="text-[#25D366] group-hover:scale-110 transition-transform" />
                   <span className="font-display text-xl md:text-2xl text-[#25D366]">WhatsApp</span>
                 </a>
-                <a href="https://instagram.com" target="_blank" rel="noreferrer" className="bg-[#E1306C]/10 border border-[#E1306C]/30 p-8 rounded-2xl flex flex-col items-center justify-center gap-4 hover:bg-[#E1306C]/20 transition-colors group">
+                <a href="https://www.instagram.com/fastpub_" target="_blank" rel="noreferrer" className="bg-[#E1306C]/10 border border-[#E1306C]/30 p-8 rounded-2xl flex flex-col items-center justify-center gap-4 hover:bg-[#E1306C]/20 transition-colors group">
                   <Instagram size={40} className="text-[#E1306C] group-hover:scale-110 transition-transform" />
-                  <span className="font-display text-xl md:text-2xl text-[#E1306C]">Instagram</span>
+                  <span className="font-display text-xl md:text-2xl text-[#E1306C]">fastpub_</span>
                 </a>
               </div>
             </motion.div>
@@ -70,15 +70,21 @@ export default function Contact() {
               initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}
               className="bg-card border border-border rounded-2xl overflow-hidden relative min-h-[500px]"
             >
-              <div className="absolute inset-0 bg-secondary/80 mix-blend-color z-10 pointer-events-none" />
-              <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=800&q=80" alt="Map Location" className="w-full h-full object-cover grayscale" />
+              <div className="absolute inset-0 bg-secondary/50 mix-blend-multiply z-10 pointer-events-none" />
+              <iframe
+                title="Fast Pub location map"
+                src="https://www.google.com/maps?q=74%20Fellaoucene%20Bahia%20Oran%20Local%203%20Rond%20Point%20Bahia%20Oran%20Algeria%2031000&z=15&output=embed"
+                className="w-full h-full min-h-[500px]"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
 
               <div className="absolute bottom-10 left-10 right-10 bg-background/90 backdrop-blur-md border border-border p-8 rounded-xl z-20 shadow-2xl">
                 <div className="flex items-start gap-4">
                   <MapPin className="text-primary mt-1 flex-shrink-0" size={24} />
                   <div>
                     <h4 className="font-display text-[1.8rem] md:text-3xl mb-2">{c.hqTitle}</h4>
-                    <p className="font-sans text-muted-foreground whitespace-pre-line">{c.hqAddress}</p>
+                    <p className="font-sans text-muted-foreground whitespace-pre-line">74 Fellaoucene Bahia, Local 3{"\n"}Rond Point Bahia, Oran</p>
                   </div>
                 </div>
               </div>

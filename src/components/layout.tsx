@@ -293,14 +293,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 </li>
                 <li className="flex items-center gap-3">
                   <Instagram size={18} className="text-primary shrink-0" />
-                  <a href="https://instagram.com/fastpub" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors">@fastpub</a>
+                  <a href="https://www.instagram.com/fastpub_" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors">@fastpub_</a>
                 </li>
                 <li className="flex flex-col gap-1 mt-2">
                   <span className="flex items-center gap-3">
                     <MapPin size={18} className="text-primary shrink-0" />
-                    <span>Creative District</span>
+                    <span>Bahia Oran</span>
                   </span>
-                  <span className="ps-7 text-sm">124 Print Ave, NY 10012</span>
+                  <span className="ps-7 text-sm">74 Fellaoucene Bahia, Local 3</span>
                 </li>
               </ul>
             </div>
