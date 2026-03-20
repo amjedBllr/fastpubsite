@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { ArrowRight, Star, Zap, CheckCircle2 } from "lucide-react";
@@ -24,17 +24,58 @@ const SERVICE_IMGS = [
   "photo-1626785774573-4b799315345d",
 ];
 
+function FloatingDraggable({
+  className,
+  src,
+  alt,
+  dragConstraints,
+  floatAnimate,
+  floatTransition,
+  initial,
+  innerClassName,
+}: {
+  className: string;
+  src: string;
+  alt: string;
+  dragConstraints: React.RefObject<HTMLElement | null>;
+  floatAnimate: Record<string, unknown>;
+  floatTransition: Record<string, unknown>;
+  initial: Record<string, unknown>;
+  innerClassName?: string;
+}) {
+  return (
+    <motion.div
+      className={cn(className, "cursor-grab active:cursor-grabbing")}
+      drag
+      dragConstraints={dragConstraints}
+      dragElastic={0.08}
+      dragMomentum={false}
+      whileDrag={{ scale: 1.02 }}
+    >
+      <motion.img
+        src={src}
+        alt={alt}
+        className={innerClassName ?? "w-full h-full object-contain drop-shadow-2xl"}
+        initial={initial}
+        animate={floatAnimate}
+        transition={floatTransition}
+      />
+    </motion.div>
+  );
+}
+
 export default function Home() {
   const { t, dir } = useI18n();
   const isMobile = useIsMobile();
   const [overlayIdx, setOverlayIdx] = useState<number | null>(null);
+  const heroRef = useRef<HTMLElement>(null);
 
   const activeService = overlayIdx !== null ? t.services.items[overlayIdx] : null;
 
   return (
     <Layout>
       {/* HERO SECTION */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+      <section ref={heroRef} className="relative min-h-[88vh] flex items-center overflow-hidden">
         <div className={cn(
           "absolute top-20 right-[10%] w-[30vw] h-[30vw] bg-primary/20 rounded-full pointer-events-none",
           isMobile ? "blur-[56px]" : "blur-[100px]"
@@ -46,41 +87,71 @@ export default function Home() {
 
         {/* Mobile-only floating stickers — absolutely positioned in hero background */}
         <div className="lg:hidden absolute inset-0 pointer-events-none overflow-hidden">
-          <motion.img
+          <FloatingDraggable
             src={`${import.meta.env.BASE_URL}images/logo-shape.png`}
             alt=""
-            aria-hidden="true"
-            className="absolute top-18 right-3 w-28 sm:w-36 object-contain drop-shadow-2xl opacity-80"
+            className={cn(
+              "absolute top-18 w-28 sm:w-36 opacity-80 pointer-events-auto",
+              dir === "rtl" ? "left-3" : "right-3"
+            )}
+            dragConstraints={heroRef}
             initial={{ opacity: 0, scale: 0.85 }}
-            animate={
+            floatAnimate={
               isMobile
                 ? { opacity: 0.8, scale: 1, y: [0, -6, 0], rotate: [0, 2, 0] }
                 : { opacity: 0.9, scale: 1, y: [0, -12, 0], rotate: [0, 4, 0] }
             }
-            transition={{
+            floatTransition={{
               opacity: { duration: 0.8, delay: 0.25 },
               scale: { duration: 0.8, delay: 0.25 },
               y: { repeat: Infinity, duration: isMobile ? 8 : 6, ease: "easeInOut", delay: 0.4 },
               rotate: { repeat: Infinity, duration: isMobile ? 8 : 6, ease: "easeInOut", delay: 0.4 }
             }}
+            innerClassName="w-full h-full object-contain drop-shadow-2xl"
           />
-          <motion.img
+          <FloatingDraggable
             src={`${import.meta.env.BASE_URL}images/floating-sticker-1.png`}
             alt=""
-            aria-hidden="true"
-            className="absolute bottom-8 right-[-1rem] w-36 sm:w-44 object-contain drop-shadow-2xl opacity-75"
+            className={cn(
+              "absolute bottom-8 w-36 sm:w-44 opacity-75 pointer-events-auto",
+              dir === "rtl" ? "left-[-1rem]" : "right-[-1rem]"
+            )}
+            dragConstraints={heroRef}
             initial={{ opacity: 0, scale: 0.85 }}
-            animate={
+            floatAnimate={
               isMobile
                 ? { opacity: 0.75, scale: 1, y: [0, 8, 0], rotate: [-5, -2, -5] }
                 : { opacity: 0.85, scale: 1, y: [0, 14, 0], rotate: [-8, -4, -8] }
             }
-            transition={{
+            floatTransition={{
               opacity: { duration: 0.8, delay: 0.4 },
               scale: { duration: 0.8, delay: 0.4 },
               y: { repeat: Infinity, duration: isMobile ? 9 : 7, ease: "easeInOut", delay: 1 },
               rotate: { repeat: Infinity, duration: isMobile ? 9 : 7, ease: "easeInOut", delay: 1 }
             }}
+            innerClassName="w-full h-full object-contain drop-shadow-2xl"
+          />
+          <FloatingDraggable
+            src={`${import.meta.env.BASE_URL}images/floating-sticker-2.png`}
+            alt=""
+            className={cn(
+              "absolute top-[42%] w-24 sm:w-32 opacity-70 pointer-events-auto",
+              dir === "rtl" ? "left-[18%]" : "right-[18%]"
+            )}
+            dragConstraints={heroRef}
+            initial={{ opacity: 0, scale: 0.88 }}
+            floatAnimate={
+              isMobile
+                ? { opacity: 0.7, scale: 1, y: [0, -5, 0], rotate: [4, 1, 4] }
+                : { opacity: 0.78, scale: 1, y: [0, -9, 0], rotate: [6, 2, 6] }
+            }
+            floatTransition={{
+              opacity: { duration: 0.8, delay: 0.55 },
+              scale: { duration: 0.8, delay: 0.55 },
+              y: { repeat: Infinity, duration: isMobile ? 8.5 : 7, ease: "easeInOut", delay: 0.8 },
+              rotate: { repeat: Infinity, duration: isMobile ? 8.5 : 7, ease: "easeInOut", delay: 0.8 }
+            }}
+            innerClassName="w-full h-full object-contain drop-shadow-2xl"
           />
         </div>
 
@@ -89,7 +160,7 @@ export default function Home() {
 
             {/* Left Content */}
             <motion.div
-              className="lg:col-span-7 flex flex-col justify-center pt-20 lg:pt-0"
+              className="lg:col-span-7 flex flex-col justify-center pt-2 md:pt-4 lg:pt-0"
               initial="hidden"
               animate="visible"
               variants={staggerContainer}
@@ -137,28 +208,52 @@ export default function Home() {
               transition={{ duration: 1, delay: 0.2 }}
             >
               {/* Floating sticker 1 */}
-              <motion.img
+              <FloatingDraggable
                 src={`${import.meta.env.BASE_URL}images/logo-shape.png`}
                 alt="Decorative 3D Shape"
-                className="absolute top-[10%] right-0 w-64 h-64 object-contain drop-shadow-2xl z-20"
-                animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
-                transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+                className="absolute top-[10%] right-0 w-64 h-64 z-20"
+                dragConstraints={heroRef}
+                initial={{ opacity: 1, scale: 1 }}
+                floatAnimate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
+                floatTransition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+                innerClassName="w-full h-full object-contain drop-shadow-2xl"
               />
 
               {/* Floating sticker 2 */}
-              <motion.img
+              <FloatingDraggable
                 src={`${import.meta.env.BASE_URL}images/floating-sticker-1.png`}
                 alt="Floating Sticker"
-                className="absolute bottom-[20%] left-[10%] w-72 h-72 object-contain drop-shadow-2xl z-30"
-                animate={{ y: [0, 20, 0], rotate: [-10, -5, -10] }}
-                transition={{ repeat: Infinity, duration: 7, ease: "easeInOut", delay: 1 }}
+                className="absolute bottom-[20%] left-[10%] w-72 h-72 z-30"
+                dragConstraints={heroRef}
+                initial={{ opacity: 1, scale: 1 }}
+                floatAnimate={{ y: [0, 20, 0], rotate: [-10, -5, -10] }}
+                floatTransition={{ repeat: Infinity, duration: 7, ease: "easeInOut", delay: 1 }}
+                innerClassName="w-full h-full object-contain drop-shadow-2xl"
+              />
+
+              <FloatingDraggable
+                src={`${import.meta.env.BASE_URL}images/floating-sticker-2.png`}
+                alt="Floating Typography Sticker"
+                className="absolute top-[36%] right-[8%] w-52 h-52 z-20"
+                dragConstraints={heroRef}
+                initial={{ opacity: 1, scale: 1 }}
+                floatAnimate={{ y: [0, -14, 0], rotate: [5, 2, 5] }}
+                floatTransition={{ repeat: Infinity, duration: 6.5, ease: "easeInOut", delay: 0.6 }}
+                innerClassName="w-full h-full object-contain drop-shadow-2xl"
               />
 
               {/* Background glow */}
               <div className="absolute top-[40%] left-[30%] w-48 h-64 bg-gradient-to-tr from-primary to-accent rounded-2xl rotate-12 opacity-80 blur-sm -z-10" />
 
               {/* Mock approval card */}
-              <div className="absolute top-[30%] right-[20%] w-48 h-64 bg-card border-2 border-border rounded-xl -rotate-6 shadow-2xl p-4 flex flex-col justify-between z-10">
+              <motion.div
+                className="absolute top-[30%] right-[20%] w-48 h-64 bg-card border-2 border-border rounded-xl -rotate-6 shadow-2xl p-4 flex flex-col justify-between z-10 cursor-grab active:cursor-grabbing"
+                drag
+                dragConstraints={heroRef}
+                dragElastic={0.08}
+                dragMomentum={false}
+                whileDrag={{ scale: 1.02 }}
+              >
                 <div className="w-10 h-10 rounded-full bg-primary mb-4" />
                 <div className="space-y-2">
                   <div className="h-2 w-full bg-muted rounded-full" />
@@ -169,7 +264,7 @@ export default function Home() {
                   <span className="font-display text-xs text-muted-foreground">APPROVED</span>
                   <CheckCircle2 size={14} className="text-primary" />
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
           </div>
         </div>
@@ -326,9 +421,9 @@ export default function Home() {
         <div className="max-w-5xl mx-auto text-center relative z-10">
           <motion.h2
             initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            className="text-5xl md:text-7xl font-display text-background mb-8 leading-none whitespace-pre-line"
+            className="text-5xl md:text-7xl font-display text-background mb-12 md:mb-14 leading-none whitespace-pre-line"
           >
-            {t.cta.heading}<br /><span className="text-foreground">{t.cta.highlight}</span>
+            {t.cta.heading} <span className="text-foreground">{t.cta.highlight}</span>
           </motion.h2>
           <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
             <Link href="/order" className="inline-flex items-center gap-4 px-9 py-4 bg-background text-foreground font-display text-xl md:text-2xl tracking-wide uppercase rounded-sm hover:scale-105 active:scale-95 transition-transform shadow-2xl">
