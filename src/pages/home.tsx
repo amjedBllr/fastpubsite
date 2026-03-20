@@ -86,7 +86,7 @@ export default function Home() {
   return (
     <Layout>
       {/* HERO SECTION */}
-      <section ref={heroRef} className="relative min-h-[88vh] flex items-center overflow-hidden">
+      <section ref={heroRef} className="relative min-h-[88vh] -mt-[40px] flex items-center overflow-hidden">
         <div className={cn(
           "absolute top-20 right-[10%] w-[30vw] h-[30vw] bg-primary/20 rounded-full pointer-events-none",
           isMobile ? "blur-[56px]" : "blur-[100px]"
@@ -166,7 +166,7 @@ export default function Home() {
                 {t.hero.line3}
               </motion.h1>
 
-              <motion.p variants={fadeUp} className="text-base md:text-lg font-sans text-muted-foreground max-w-xl mb-10 leading-relaxed">
+              <motion.p variants={fadeUp} className="text-sm md:text-base font-sans text-muted-foreground max-w-xl mb-10 leading-relaxed">
                 {t.hero.subtitle}
               </motion.p>
 

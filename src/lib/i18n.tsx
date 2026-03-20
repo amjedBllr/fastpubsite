@@ -21,7 +21,7 @@ export const translations = {
       subtitle: "We create bold, unforgettable stickers, packaging, and brand collateral that demands attention. Your product deserves better visuals.",
       cta: "Start Your Order",
       viewPortfolio: "View Portfolio",
-      headingSize: "text-5xl md:text-7xl lg:text-[7.25rem]",
+      headingSize: "text-4xl md:text-4xl lg:text-[5.2rem]",
     },
     marquee: "PREMIUM DIE-CUT STICKERS · CUSTOM PACKAGING · BRAND COLLATERAL",
     services: {
