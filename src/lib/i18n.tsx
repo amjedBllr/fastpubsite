@@ -21,7 +21,7 @@ export const translations = {
       subtitle: "We create bold, unforgettable stickers, packaging, and brand collateral that demands attention. Your product deserves better visuals.",
       cta: "Start Your Order",
       viewPortfolio: "View Portfolio",
-      headingSize: "text-7xl md:text-8xl lg:text-[8.5rem]",
+      headingSize: "text-5xl md:text-7xl lg:text-[7.25rem]",
     },
     marquee: "PREMIUM DIE-CUT STICKERS · CUSTOM PACKAGING · BRAND COLLATERAL",
     services: {
@@ -79,7 +79,7 @@ export const translations = {
     about: {
       heroLine1: "WE ARE",
       heroLine2: "FAST PUB.",
-      headingSize: "text-7xl md:text-[10rem]",
+      headingSize: "text-5xl md:text-[7rem]",
       mission: "THE MISSION",
       missionP1: "Fast Pub was born from a simple frustration: finding high-quality, custom-cut printed materials was too slow and too generic. We built a creative printing house that merges agency-level design intuition with cutting-edge manufacturing.",
       missionP2: "Whether you need a run of 50 holographic die-cut stickers for an event, or 50,000 product labels for your new retail line, we deliver with uncompromising quality and speed.",
@@ -183,7 +183,7 @@ export const translations = {
       subtitle: "Nous créons des autocollants audacieux, des emballages et des supports de marque inoubliables qui captent l'attention. Votre produit mérite de meilleurs visuels.",
       cta: "Démarrer votre commande",
       viewPortfolio: "Voir le Portfolio",
-      headingSize: "text-5xl md:text-6xl lg:text-[6rem]",
+      headingSize: "text-4xl md:text-5xl lg:text-[5.25rem]",
     },
     marquee: "STICKERS DÉCOUPE PREMIUM · EMBALLAGE PERSONNALISÉ · SUPPORTS DE MARQUE",
     services: {
@@ -241,7 +241,7 @@ export const translations = {
     about: {
       heroLine1: "NOUS SOMMES",
       heroLine2: "FAST PUB.",
-      headingSize: "text-6xl md:text-8xl",
+      headingSize: "text-5xl md:text-7xl",
       mission: "NOTRE MISSION",
       missionP1: "Fast Pub est né d'une frustration simple : trouver des supports imprimés de haute qualité, en coupe personnalisée, était trop lent et trop générique. Nous avons créé une maison d'impression créative qui fusionne l'intuition design d'une agence avec une fabrication de pointe.",
       missionP2: "Que vous ayez besoin d'un tirage de 50 stickers holographiques pour un événement ou de 50 000 étiquettes produit pour votre nouvelle ligne retail, nous livrons avec une qualité et une rapidité irréprochables.",
@@ -345,7 +345,7 @@ export const translations = {
       subtitle: "نصنع ملصقات جريئة ولا تُنسى، وعبوات، ومواد تسويقية تستقطب الانتباه. منتجك يستحق مظهراً بصرياً أفضل.",
       cta: "ابدأ طلبك الآن",
       viewPortfolio: "عرض الأعمال",
-      headingSize: "text-5xl md:text-6xl lg:text-7xl",
+      headingSize: "text-4xl md:text-5xl lg:text-6xl",
     },
     marquee: "ملصقات قطع دقيقة فاخرة · تغليف مخصص · هوية بصرية للعلامة التجارية",
     services: {
@@ -403,7 +403,7 @@ export const translations = {
     about: {
       heroLine1: "نحن",
       heroLine2: "فاست بوب.",
-      headingSize: "text-6xl md:text-8xl",
+      headingSize: "text-5xl md:text-7xl",
       mission: "مهمتنا",
       missionP1: "وُلد فاست بوب من إحباط بسيط: إيجاد مواد مطبوعة عالية الجودة بقطع مخصصة كان بطيئاً جداً وعاماً جداً. بنينا داراً للطباعة الإبداعية تدمج حدس التصميم على مستوى الوكالة مع التصنيع المتطور.",
       missionP2: "سواء احتجت إلى 50 ملصقاً هولوغرافياً مخصصاً لفعالية أو 50,000 ملصق منتج لخطك التجاري الجديد، نقدم بجودة وسرعة لا تساوم.",

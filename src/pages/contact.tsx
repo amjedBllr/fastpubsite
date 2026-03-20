@@ -15,7 +15,7 @@ export default function Contact() {
         <div className="max-w-7xl mx-auto">
           <motion.h1
             initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
-            className="text-6xl md:text-[8rem] font-display uppercase leading-none mb-12 text-foreground"
+            className="text-5xl md:text-[6.5rem] font-display uppercase leading-none mb-12 text-foreground"
           >
             {c.hero} <span className="text-primary">{c.heroHighlight}</span>
           </motion.h1>
@@ -31,13 +31,13 @@ export default function Contact() {
                     <Phone size={28} />
                   </div>
                   <div>
-                    <h3 className="font-display text-3xl">{c.callTitle}</h3>
+                    <h3 className="font-display text-[1.8rem] md:text-3xl">{c.callTitle}</h3>
                     <p className="font-sans text-muted-foreground uppercase tracking-widest text-xs font-bold mt-1">{c.callHours}</p>
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <a href="tel:+1234567890" className="block font-sans text-2xl hover:text-primary transition-colors">+1 (234) 567-890</a>
-                  <a href="tel:+1234567891" className="block font-sans text-2xl hover:text-primary transition-colors">+1 (234) 567-891</a>
+                  <a href="tel:+1234567890" className="block font-sans text-xl md:text-2xl hover:text-primary transition-colors">+1 (234) 567-890</a>
+                  <a href="tel:+1234567891" className="block font-sans text-xl md:text-2xl hover:text-primary transition-colors">+1 (234) 567-891</a>
                 </div>
               </div>
 
@@ -47,21 +47,21 @@ export default function Contact() {
                     <Mail size={28} />
                   </div>
                   <div>
-                    <h3 className="font-display text-3xl">{c.emailTitle}</h3>
+                    <h3 className="font-display text-[1.8rem] md:text-3xl">{c.emailTitle}</h3>
                     <p className="font-sans text-muted-foreground uppercase tracking-widest text-xs font-bold mt-1">{c.emailReply}</p>
                   </div>
                 </div>
-                <a href="mailto:hello@fastpub.com" className="block font-sans text-2xl hover:text-primary transition-colors">hello@fastpub.com</a>
+                <a href="mailto:hello@fastpub.com" className="block font-sans text-xl md:text-2xl hover:text-primary transition-colors">hello@fastpub.com</a>
               </div>
 
               <div className="grid grid-cols-2 gap-8">
                 <a href="#" className="bg-[#25D366]/10 border border-[#25D366]/30 p-8 rounded-2xl flex flex-col items-center justify-center gap-4 hover:bg-[#25D366]/20 transition-colors group">
                   <MessageSquare size={40} className="text-[#25D366] group-hover:scale-110 transition-transform" />
-                  <span className="font-display text-2xl text-[#25D366]">WhatsApp</span>
+                  <span className="font-display text-xl md:text-2xl text-[#25D366]">WhatsApp</span>
                 </a>
                 <a href="https://instagram.com" target="_blank" rel="noreferrer" className="bg-[#E1306C]/10 border border-[#E1306C]/30 p-8 rounded-2xl flex flex-col items-center justify-center gap-4 hover:bg-[#E1306C]/20 transition-colors group">
                   <Instagram size={40} className="text-[#E1306C] group-hover:scale-110 transition-transform" />
-                  <span className="font-display text-2xl text-[#E1306C]">Instagram</span>
+                  <span className="font-display text-xl md:text-2xl text-[#E1306C]">Instagram</span>
                 </a>
               </div>
             </motion.div>
@@ -77,7 +77,7 @@ export default function Contact() {
                 <div className="flex items-start gap-4">
                   <MapPin className="text-primary mt-1 flex-shrink-0" size={24} />
                   <div>
-                    <h4 className="font-display text-3xl mb-2">{c.hqTitle}</h4>
+                    <h4 className="font-display text-[1.8rem] md:text-3xl mb-2">{c.hqTitle}</h4>
                     <p className="font-sans text-muted-foreground whitespace-pre-line">{c.hqAddress}</p>
                   </div>
                 </div>

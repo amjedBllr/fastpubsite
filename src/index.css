@@ -78,18 +78,32 @@
 }
 
 @layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+
   * {
     @apply border-border;
   }
 
   body {
     @apply font-sans antialiased bg-background text-foreground overflow-x-hidden;
+    font-size: 15px;
+    line-height: 1.65;
+    overscroll-behavior-y: auto;
     /* Soft noise texture for premium agency feel */
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-display uppercase tracking-wider;
+  }
+}
+
+@media (max-width: 767px) {
+  body {
+    background-size: 160px 160px;
   }
 }
 
@@ -117,7 +131,7 @@
   .lang-ar body {
     font-family: 'Cairo', sans-serif;
     letter-spacing: 0;
-    line-height: 1.8;
+    line-height: 1.75;
   }
   .lang-ar h1, .lang-ar h2, .lang-ar h3, .lang-ar h4 {
     font-family: 'Cairo', sans-serif;

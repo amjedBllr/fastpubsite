@@ -49,9 +49,9 @@ export default function Order() {
         <div className="min-h-[80vh] flex flex-col items-center justify-center px-6">
           <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-center bg-card border border-border p-16 rounded-2xl max-w-xl w-full shadow-2xl">
             <CheckCircle2 size={80} className="text-primary mx-auto mb-8" />
-            <h2 className="font-display text-5xl mb-4">{o.successTitle}</h2>
-            <p className="font-sans text-muted-foreground text-lg mb-8">{o.successMsg}</p>
-            <button onClick={() => createOrder.reset()} className="px-8 py-3 bg-secondary text-foreground font-display text-xl tracking-wider rounded hover:bg-border transition-colors">
+            <h2 className="font-display text-4xl md:text-5xl mb-4">{o.successTitle}</h2>
+            <p className="font-sans text-base md:text-lg text-muted-foreground mb-8">{o.successMsg}</p>
+            <button onClick={() => createOrder.reset()} className="px-8 py-3 bg-secondary text-foreground font-display text-lg md:text-xl tracking-wide rounded hover:bg-border transition-colors">
               {o.submitAnother}
             </button>
           </motion.div>
@@ -65,7 +65,7 @@ export default function Order() {
       <section className="pt-20 pb-32 px-6">
         <div className="max-w-4xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-16">
-            <h1 className="text-5xl md:text-7xl font-display uppercase mb-4">
+            <h1 className="text-4xl md:text-6xl font-display uppercase mb-4">
               {o.hero} <span className="text-primary">{o.heroHighlight}</span>
             </h1>
             <p className="font-sans text-muted-foreground text-lg">{o.subtitle}</p>
@@ -80,21 +80,21 @@ export default function Order() {
 
             {/* Step 1 */}
             <div className="space-y-6">
-              <h3 className="font-display text-3xl border-b border-border pb-4">{o.step1}</h3>
+              <h3 className="font-display text-[1.8rem] md:text-3xl border-b border-border pb-4">{o.step1}</h3>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="md:col-span-2">
                   <label className="block font-sans text-sm font-bold uppercase tracking-wider mb-3">{o.iAm}</label>
                   <div className="flex gap-4">
                     <label className={clsx(
-                      "flex-1 border p-4 rounded-xl cursor-pointer text-center font-display text-2xl transition-all",
+                      "flex-1 border p-4 rounded-xl cursor-pointer text-center font-display text-xl md:text-2xl transition-all",
                       form.watch("customerType") === "individual" ? "border-primary bg-primary/10 text-primary" : "border-border hover:border-muted-foreground bg-background"
                     )}>
                       <input type="radio" value="individual" className="hidden" {...form.register("customerType")} />
                       {o.individual}
                     </label>
                     <label className={clsx(
-                      "flex-1 border p-4 rounded-xl cursor-pointer text-center font-display text-2xl transition-all",
+                      "flex-1 border p-4 rounded-xl cursor-pointer text-center font-display text-xl md:text-2xl transition-all",
                       form.watch("customerType") === "company" ? "border-primary bg-primary/10 text-primary" : "border-border hover:border-muted-foreground bg-background"
                     )}>
                       <input type="radio" value="company" className="hidden" {...form.register("customerType")} />
@@ -125,12 +125,12 @@ export default function Order() {
 
             {/* Step 2 */}
             <div className="space-y-6">
-              <h3 className="font-display text-3xl border-b border-border pb-4">{o.step2}</h3>
+              <h3 className="font-display text-[1.8rem] md:text-3xl border-b border-border pb-4">{o.step2}</h3>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="md:col-span-2">
                   <label className="block font-sans text-sm font-bold uppercase tracking-wider mb-2">{o.whatToPrint}</label>
-                  <select {...form.register("orderType")} className="w-full bg-background border border-border rounded-lg px-4 py-4 font-sans text-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all appearance-none cursor-pointer">
+                  <select {...form.register("orderType")} className="w-full bg-background border border-border rounded-lg px-4 py-4 font-sans text-base md:text-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all appearance-none cursor-pointer">
                     {o.orderTypes.map((type) => (
                       <option key={type.value} value={type.value}>{type.label}</option>
                     ))}
@@ -166,7 +166,7 @@ export default function Order() {
 
             {/* Step 3 */}
             <div className="space-y-6">
-              <h3 className="font-display text-3xl border-b border-border pb-4">{o.step3}</h3>
+              <h3 className="font-display text-[1.8rem] md:text-3xl border-b border-border pb-4">{o.step3}</h3>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="md:col-span-2">
@@ -196,7 +196,7 @@ export default function Order() {
               <button
                 type="submit"
                 disabled={createOrder.isPending}
-                className="w-full sm:w-auto px-12 py-4 bg-primary text-primary-foreground font-display text-2xl tracking-wider rounded-sm hover:bg-primary/90 hover:shadow-[0_0_20px_rgba(242,74,29,0.4)] transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-12 py-4 bg-primary text-primary-foreground font-display text-xl md:text-2xl tracking-wide rounded-sm hover:bg-primary/90 hover:shadow-[0_0_20px_rgba(242,74,29,0.4)] transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {createOrder.isPending ? (
                   <><Loader2 className="animate-spin" /> {o.submitting}</>

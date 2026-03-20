@@ -70,10 +70,10 @@ export default function Portfolio() {
       <section className="pt-20 pb-10 px-6">
         <div className="max-w-7xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-12">
-            <h1 className="text-6xl md:text-8xl font-display mb-6 uppercase">
+            <h1 className="text-5xl md:text-7xl font-display mb-6 uppercase">
               {p.hero} <span className="text-primary">{p.heroHighlight}</span>
             </h1>
-            <p className="font-sans text-muted-foreground text-xl max-w-2xl">{p.subtitle}</p>
+            <p className="font-sans text-muted-foreground text-lg max-w-2xl">{p.subtitle}</p>
           </motion.div>
 
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="flex flex-wrap gap-4 mb-16">
@@ -120,7 +120,7 @@ export default function Portfolio() {
 
                   <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8 z-10">
                     <p className="font-sans text-primary font-bold text-sm tracking-widest uppercase mb-2 transform translate-y-4 group-hover:translate-y-0 transition-transform">{item.catLabel}</p>
-                    <p className="font-display text-4xl text-white transform translate-y-4 group-hover:translate-y-0 transition-transform delay-75">Project {item.id}</p>
+                    <p className="font-display text-3xl md:text-4xl text-white transform translate-y-4 group-hover:translate-y-0 transition-transform delay-75">Project {item.id}</p>
                     <p className="font-sans text-xs text-muted-foreground mt-2 translate-y-4 group-hover:translate-y-0 transition-transform delay-100">{p.viewProject} →</p>
                   </div>
                 </motion.div>

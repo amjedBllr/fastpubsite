@@ -39,30 +39,30 @@ export default function About() {
             <div className="flex flex-col justify-center">
               <motion.h3
                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
-                className="font-display text-4xl mb-6"
+                className="font-display text-3xl md:text-4xl mb-6"
               >
                 {a.mission}
               </motion.h3>
               <motion.p
                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
-                className="font-sans text-xl text-muted-foreground leading-relaxed mb-8"
+                className="font-sans text-lg text-muted-foreground leading-relaxed mb-8"
               >
                 {a.missionP1}
               </motion.p>
               <motion.p
                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}
-                className="font-sans text-xl text-muted-foreground leading-relaxed"
+                className="font-sans text-lg text-muted-foreground leading-relaxed"
               >
                 {a.missionP2}
               </motion.p>
 
               <div className="mt-16 grid grid-cols-2 gap-8">
                 <div>
-                  <div className="font-display text-6xl text-primary mb-2">{a.stat1Val}</div>
+                  <div className="font-display text-5xl md:text-6xl text-primary mb-2">{a.stat1Val}</div>
                   <div className="font-sans text-sm tracking-widest uppercase text-muted-foreground font-bold">{a.stat1Label}</div>
                 </div>
                 <div>
-                  <div className="font-display text-6xl text-primary mb-2">{a.stat2Val}</div>
+                  <div className="font-display text-5xl md:text-6xl text-primary mb-2">{a.stat2Val}</div>
                   <div className="font-sans text-sm tracking-widest uppercase text-muted-foreground font-bold">{a.stat2Label}</div>
                 </div>
               </div>
@@ -74,8 +74,8 @@ export default function About() {
       <section className="py-32 bg-secondary px-6 relative border-y border-border">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-24">
-            <h2 className="text-5xl md:text-7xl font-display text-white">{a.processTitle}</h2>
-            <p className="font-sans text-muted-foreground text-lg mt-4 max-w-2xl mx-auto">{a.processSubtitle}</p>
+            <h2 className="text-4xl md:text-6xl font-display text-white">{a.processTitle}</h2>
+            <p className="font-sans text-base md:text-lg text-muted-foreground mt-4 max-w-2xl mx-auto">{a.processSubtitle}</p>
           </div>
 
           <div className="relative">
@@ -100,8 +100,8 @@ export default function About() {
 
                 <div className={cn("w-full md:w-1/2 pt-12 md:pt-0", index % 2 === 0 ? "md:pl-16 text-left" : "md:pr-16 md:text-right")}>
                   <div className="font-display text-primary text-2xl mb-2">{a.phaseLabel} {item.step}</div>
-                  <h3 className="font-display text-4xl text-white mb-4">{item.title}</h3>
-                  <p className="font-sans text-muted-foreground text-lg">{item.desc}</p>
+                  <h3 className="font-display text-3xl md:text-4xl text-white mb-4">{item.title}</h3>
+                  <p className="font-sans text-base md:text-lg text-muted-foreground">{item.desc}</p>
                 </div>
               </motion.div>
             ))}

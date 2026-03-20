@@ -10,60 +10,13 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-/* ── Lightning bolt logo SVG ── */
 function FastPubLogo() {
   return (
-    <svg
-      viewBox="0 0 110 52"
-      className="w-[88px] h-[42px] md:w-[100px] md:h-[48px]"
-      aria-label="Fast Pub"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      {/* FAST — white, slightly italic */}
-      <text
-        x="2"
-        y="22"
-        fontFamily="'Bebas Neue', sans-serif"
-        fontSize="26"
-        fill="#FCFBFC"
-        letterSpacing="1"
-        style={{ fontStyle: "italic" }}
-      >
-        FAST
-      </text>
-
-      {/* PUB — orange with a lightning bolt replacing the U */}
-      {/* P */}
-      <text
-        x="2"
-        y="48"
-        fontFamily="'Bebas Neue', sans-serif"
-        fontSize="26"
-        fill="#E33D19"
-        letterSpacing="1"
-        style={{ fontStyle: "italic" }}
-      >
-        P
-      </text>
-      {/* Lightning bolt in place of U */}
-      <polygon
-        points="28,26 20,38 25,38 22,50 32,36 26,36"
-        fill="#E33D19"
-      />
-      {/* B — offset after the bolt */}
-      <text
-        x="34"
-        y="48"
-        fontFamily="'Bebas Neue', sans-serif"
-        fontSize="26"
-        fill="#E33D19"
-        letterSpacing="1"
-        style={{ fontStyle: "italic" }}
-      >
-        B
-      </text>
-    </svg>
+    <img
+      src={`${import.meta.env.BASE_URL}logo.png`}
+      alt="Fast Pub"
+      className="h-10 w-auto object-contain md:h-12"
+    />
   );
 }
 
@@ -257,7 +210,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 >
                   <Link
                     href={link.href}
-                    className="font-display text-5xl tracking-wider hover:text-primary transition-colors block"
+                    className="font-sans text-3xl sm:text-4xl font-extrabold tracking-[0.16em] uppercase hover:text-primary transition-colors block"
                   >
                     {link.label}
                   </Link>
@@ -283,7 +236,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               >
                 <Link
                   href="/order"
-                  className="inline-block w-full py-4 bg-primary text-primary-foreground font-display text-3xl tracking-wider uppercase rounded-sm active:scale-95 transition-transform"
+                  className="inline-block w-full py-4 bg-primary text-primary-foreground font-sans text-lg sm:text-xl font-extrabold tracking-[0.16em] uppercase rounded-sm active:scale-95 transition-transform"
                 >
                   {t.nav.startOrder}
                 </Link>
@@ -305,14 +258,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div className="max-w-7xl mx-auto px-6 py-20 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 lg:gap-24">
             <div className="md:col-span-2">
-              <h2 className="font-display text-5xl md:text-7xl mb-6">
+              <h2 className="font-display text-4xl md:text-6xl mb-6">
                 {dir === "rtl" ? (
                   <>لنصنع<br /><span className="text-primary">تأثيراً.</span></>
                 ) : (
                   <>Let's Create<br /><span className="text-primary">Impact.</span></>
                 )}
               </h2>
-              <p className="text-muted-foreground font-sans max-w-sm text-lg">
+              <p className="text-muted-foreground font-sans max-w-sm text-base md:text-lg">
                 {t.footer.tagline}
               </p>
             </div>

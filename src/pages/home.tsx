@@ -6,6 +6,7 @@ import { Layout } from "@/components/layout";
 import { Overlay } from "@/components/overlay";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -25,6 +26,7 @@ const SERVICE_IMGS = [
 
 export default function Home() {
   const { t, dir } = useI18n();
+  const isMobile = useIsMobile();
   const [overlayIdx, setOverlayIdx] = useState<number | null>(null);
 
   const activeService = overlayIdx !== null ? t.services.items[overlayIdx] : null;
@@ -33,8 +35,14 @@ export default function Home() {
     <Layout>
       {/* HERO SECTION */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-        <div className="absolute top-20 right-[10%] w-[30vw] h-[30vw] bg-primary/20 rounded-full blur-[100px] pointer-events-none" />
-        <div className="absolute bottom-10 left-[5%] w-[40vw] h-[40vw] bg-accent/30 rounded-full blur-[120px] pointer-events-none" />
+        <div className={cn(
+          "absolute top-20 right-[10%] w-[30vw] h-[30vw] bg-primary/20 rounded-full pointer-events-none",
+          isMobile ? "blur-[56px]" : "blur-[100px]"
+        )} />
+        <div className={cn(
+          "absolute bottom-10 left-[5%] w-[40vw] h-[40vw] bg-accent/30 rounded-full pointer-events-none",
+          isMobile ? "blur-[72px]" : "blur-[120px]"
+        )} />
 
         {/* Mobile-only floating stickers — absolutely positioned in hero background */}
         <div className="lg:hidden absolute inset-0 pointer-events-none overflow-hidden">
@@ -42,19 +50,37 @@ export default function Home() {
             src={`${import.meta.env.BASE_URL}images/logo-shape.png`}
             alt=""
             aria-hidden="true"
-            className="absolute top-16 right-0 w-36 sm:w-44 object-contain drop-shadow-2xl opacity-90"
+            className="absolute top-18 right-3 w-28 sm:w-36 object-contain drop-shadow-2xl opacity-80"
             initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 0.9, scale: 1, y: [0, -12, 0], rotate: [0, 4, 0] }}
-            transition={{ opacity: { duration: 1, delay: 0.4 }, scale: { duration: 1, delay: 0.4 }, y: { repeat: Infinity, duration: 6, ease: "easeInOut", delay: 0.4 }, rotate: { repeat: Infinity, duration: 6, ease: "easeInOut", delay: 0.4 } }}
+            animate={
+              isMobile
+                ? { opacity: 0.8, scale: 1, y: [0, -6, 0], rotate: [0, 2, 0] }
+                : { opacity: 0.9, scale: 1, y: [0, -12, 0], rotate: [0, 4, 0] }
+            }
+            transition={{
+              opacity: { duration: 0.8, delay: 0.25 },
+              scale: { duration: 0.8, delay: 0.25 },
+              y: { repeat: Infinity, duration: isMobile ? 8 : 6, ease: "easeInOut", delay: 0.4 },
+              rotate: { repeat: Infinity, duration: isMobile ? 8 : 6, ease: "easeInOut", delay: 0.4 }
+            }}
           />
           <motion.img
             src={`${import.meta.env.BASE_URL}images/floating-sticker-1.png`}
             alt=""
             aria-hidden="true"
-            className="absolute bottom-10 right-4 w-40 sm:w-52 object-contain drop-shadow-2xl opacity-85"
+            className="absolute bottom-8 right-[-1rem] w-36 sm:w-44 object-contain drop-shadow-2xl opacity-75"
             initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 0.85, scale: 1, y: [0, 14, 0], rotate: [-8, -4, -8] }}
-            transition={{ opacity: { duration: 1, delay: 0.6 }, scale: { duration: 1, delay: 0.6 }, y: { repeat: Infinity, duration: 7, ease: "easeInOut", delay: 1 }, rotate: { repeat: Infinity, duration: 7, ease: "easeInOut", delay: 1 } }}
+            animate={
+              isMobile
+                ? { opacity: 0.75, scale: 1, y: [0, 8, 0], rotate: [-5, -2, -5] }
+                : { opacity: 0.85, scale: 1, y: [0, 14, 0], rotate: [-8, -4, -8] }
+            }
+            transition={{
+              opacity: { duration: 0.8, delay: 0.4 },
+              scale: { duration: 0.8, delay: 0.4 },
+              y: { repeat: Infinity, duration: isMobile ? 9 : 7, ease: "easeInOut", delay: 1 },
+              rotate: { repeat: Infinity, duration: isMobile ? 9 : 7, ease: "easeInOut", delay: 1 }
+            }}
           />
         </div>
 
@@ -82,20 +108,20 @@ export default function Home() {
                 {t.hero.line3}
               </motion.h1>
 
-              <motion.p variants={fadeUp} className="text-lg md:text-xl font-sans text-muted-foreground max-w-xl mb-10 leading-relaxed">
+              <motion.p variants={fadeUp} className="text-base md:text-lg font-sans text-muted-foreground max-w-xl mb-10 leading-relaxed">
                 {t.hero.subtitle}
               </motion.p>
 
               <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
                 <Link
                   href="/order"
-                  className="px-8 py-4 bg-primary text-primary-foreground font-display text-xl tracking-wider hover:bg-primary/85 hover:-translate-y-0.5 transition-all active:translate-y-0 rounded-sm"
+                  className="px-7 py-3.5 bg-primary text-primary-foreground font-display text-lg md:text-xl tracking-wide hover:bg-primary/85 hover:-translate-y-0.5 transition-all active:translate-y-0 rounded-sm"
                 >
                   {t.hero.cta}
                 </Link>
                 <Link
                   href="/portfolio"
-                  className="px-8 py-4 bg-transparent border-2 border-border text-foreground font-display text-xl tracking-wider hover:bg-secondary hover:border-secondary transition-all rounded-sm flex items-center gap-2 group"
+                  className="px-7 py-3.5 bg-transparent border-2 border-border text-foreground font-display text-lg md:text-xl tracking-wide hover:bg-secondary hover:border-secondary transition-all rounded-sm flex items-center gap-2 group"
                 >
                   {t.hero.viewPortfolio}
                   <ArrowRight size={20} className={cn("group-hover:translate-x-1 transition-transform", dir === "rtl" && "rotate-180 group-hover:-translate-x-1 group-hover:translate-x-0")} />
@@ -152,7 +178,7 @@ export default function Home() {
       {/* MARQUEE — extra top margin to breathe from hero buttons */}
       <div className="w-full bg-primary py-4 overflow-hidden flex whitespace-nowrap border-y border-border mt-20">
         <motion.div
-          className="flex font-display text-4xl text-background gap-8 px-4"
+          className="flex font-display text-3xl md:text-4xl text-background gap-8 px-4"
           animate={{ x: dir === "rtl" ? ["0%", "50%"] : ["0%", "-50%"] }}
           transition={{ ease: "linear", duration: 20, repeat: Infinity }}
         >
@@ -165,14 +191,14 @@ export default function Home() {
       </div>
 
       {/* SERVICES GRID */}
-      <section className="py-32 px-6 bg-background relative">
+      <section className="py-32 px-6 bg-background relative overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeUp}
             className="mb-16"
           >
-            <h2 className="text-5xl md:text-7xl font-display mb-4">{t.services.heading}<span className="text-primary">.</span></h2>
-            <p className="font-sans text-muted-foreground text-lg max-w-2xl">{t.services.subtitle}</p>
+            <h2 className="text-4xl md:text-6xl font-display mb-4">{t.services.heading}<span className="text-primary">.</span></h2>
+            <p className="font-sans text-muted-foreground text-base md:text-lg max-w-2xl">{t.services.subtitle}</p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -195,8 +221,8 @@ export default function Home() {
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                 </div>
-                <h3 className="font-display text-3xl mb-2 group-hover:text-primary transition-colors">{service.title}</h3>
-                <p className="font-sans text-muted-foreground leading-relaxed mb-6">{service.desc}</p>
+                <h3 className="font-display text-[1.8rem] md:text-3xl mb-2 group-hover:text-primary transition-colors">{service.title}</h3>
+                <p className="font-sans text-sm md:text-base text-muted-foreground leading-relaxed mb-6">{service.desc}</p>
                 <div className="w-12 h-12 rounded-full border border-border flex items-center justify-center group-hover:bg-primary group-hover:border-primary group-hover:text-background transition-all">
                   <ArrowRight size={20} className={cn("-rotate-45 group-hover:rotate-0 transition-transform", dir === "rtl" && "rotate-[225deg] group-hover:rotate-180")} />
                 </div>
@@ -219,11 +245,11 @@ export default function Home() {
       )}
 
       {/* PORTFOLIO PREVIEW */}
-      <section className="py-32 bg-secondary clip-diagonal relative px-6">
+      <section className="py-32 bg-secondary clip-diagonal relative px-6 overflow-hidden">
         <div className="max-w-7xl mx-auto pt-20 pb-10">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
-              <h2 className="text-5xl md:text-7xl font-display text-white">{t.portfolio.heading}<span className="text-primary">.</span></h2>
+              <h2 className="text-4xl md:text-6xl font-display text-white">{t.portfolio.heading}<span className="text-primary">.</span></h2>
             </motion.div>
             <Link href="/portfolio" className="text-white hover:text-primary font-sans font-bold uppercase tracking-widest flex items-center gap-2 transition-colors">
               {t.portfolio.viewAll} <ArrowRight size={20} className={cn(dir === "rtl" && "rotate-180")} />
@@ -259,11 +285,11 @@ export default function Home() {
       </section>
 
       {/* WHY CHOOSE US */}
-      <section className="py-32 px-6">
+      <section className="py-32 px-6 overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
             <div>
-              <motion.h2 initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="text-5xl md:text-7xl font-display mb-10 sticky top-32 whitespace-pre-line">
+              <motion.h2 initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="text-4xl md:text-6xl font-display mb-10 sticky top-32 whitespace-pre-line">
                 {t.why.heading}<span className="text-primary">.</span>
               </motion.h2>
             </div>
@@ -282,11 +308,11 @@ export default function Home() {
                   )}
                 >
                   <span className={cn(
-                    "absolute top-0 font-display text-6xl md:text-8xl opacity-30",
+                    "absolute top-0 font-display text-5xl md:text-7xl opacity-30",
                     dir === "rtl" ? "-right-[2px] translate-x-full" : "-left-[2px] -translate-x-full"
                   )}>{feature.num}</span>
-                  <h3 className="font-display text-4xl mb-4 text-foreground">{feature.title}</h3>
-                  <p className="font-sans text-muted-foreground text-lg leading-relaxed">{feature.desc}</p>
+                  <h3 className="font-display text-3xl md:text-4xl mb-4 text-foreground">{feature.title}</h3>
+                  <p className="font-sans text-base md:text-lg text-muted-foreground leading-relaxed">{feature.desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -300,12 +326,12 @@ export default function Home() {
         <div className="max-w-5xl mx-auto text-center relative z-10">
           <motion.h2
             initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            className="text-6xl md:text-8xl font-display text-background mb-8 leading-none whitespace-pre-line"
+            className="text-5xl md:text-7xl font-display text-background mb-8 leading-none whitespace-pre-line"
           >
             {t.cta.heading}<br /><span className="text-foreground">{t.cta.highlight}</span>
           </motion.h2>
           <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
-            <Link href="/order" className="inline-flex items-center gap-4 px-10 py-5 bg-background text-foreground font-display text-2xl tracking-wider uppercase rounded-sm hover:scale-105 active:scale-95 transition-transform shadow-2xl">
+            <Link href="/order" className="inline-flex items-center gap-4 px-9 py-4 bg-background text-foreground font-display text-xl md:text-2xl tracking-wide uppercase rounded-sm hover:scale-105 active:scale-95 transition-transform shadow-2xl">
               {t.cta.button} <ArrowRight size={24} className={cn(dir === "rtl" && "rotate-180")} />
             </Link>
           </motion.div>
