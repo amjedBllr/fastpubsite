@@ -147,7 +147,7 @@ export default function Home() {
 
             {/* Left Content */}
             <motion.div
-              className="lg:col-span-7 flex flex-col justify-center pt-2 md:pt-4 lg:pt-0"
+              className="lg:col-span-7 flex flex-col justify-center pt-1 md:pt-3 lg:pt-0"
               initial="hidden"
               animate="visible"
               variants={staggerContainer}
